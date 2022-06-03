@@ -6,26 +6,22 @@ var start = false;
 
 var level = "0";
 
-// for( var i = 0 ; i<buttonOnScreen.length ; i++){
-//   console.log(buttonOnScreen[i]);
-// }
 var checkAnswerCount = 0;
 document.querySelector("#play").addEventListener("click", function() {
   if (!start) {
     start = true;
     patternGeneration();
+    for (var i = 0; i < buttonOnScreen.length; i++) {
+      var selectedButton = document.querySelectorAll(".btn")[i];
+      selectedButton.addEventListener("click", function() {
+        var chosenButton = this.getAttribute("id");
+        buttonPressed.push(chosenButton);
+        fadeButton(chosenButton);
+        checkAnswer(buttonPressed.length);
+      });
+    }
   }
 });
-for (var i = 0; i < buttonOnScreen.length; i++) {
-  var selectedButton = document.querySelectorAll(".btn")[i];
-  selectedButton.addEventListener("click", function() {
-    var chosenButton = this.getAttribute("id");
-    buttonPressed.push(chosenButton);
-    fadeButton(chosenButton);
-    checkAnswer(buttonPressed.length);
-  });
-}
-
 function patternGeneration() {
   document.querySelector("#score").innerHTML = "SCORE: "
   buttonPressed = [];
@@ -34,20 +30,25 @@ function patternGeneration() {
   var randomNumber = Math.floor(Math.random() * 16);
   var randomChosenButton = buttonOnScreen[randomNumber];
   buttonPattern.push(randomChosenButton);
-  fadeButton(randomChosenButton);
-  // for(var i = 0 ; i<buttonPattern.length ; i++ ){
-  //
-  //   setTimeout(function(){
-  //     var fadingButton = document.querySelector("#" + buttonPattern[i]);
-  //     fadingButton?.classList.add("pressed");
-  //     setTimeout(function() {
-  //       fadingButton?.classList.remove("pressed");
+  // setTimeout(function(){
+  //   for(var i = 0 ; i<buttonPattern.length ; i++){
+  //     var currentButton = document.getElementById(buttonPattern[i]).getAttribute("id");
+  //     console.log(currentButton);
+  //     document.getElementById(currentButton).classList.add("pressed");
+  //     setTimeout(function(){
+  //       document.getElementById(currentButton).classList.remove("pressed");
   //     },100);
-  //   },200);
-  // }
-
+  //   }
+  // },200);
+  setInterval(function(){
+    for(var i = 0 ; i < buttonPattern.length ; i++){
+      var currentButton = document.getElementById(buttonPattern[i]).getAttribute("id");
+      // till now all the buttons will be caught.
+      // if( i!= buttonPattern.length-1)
+      fadeButton(currentButton);
+    }
+  },1000)
 }
-
 function checkAnswer(currentRound) {
   checkAnswerCount = 0;
   var currentPattern = [];
@@ -70,12 +71,13 @@ function checkAnswer(currentRound) {
     }
   }
 }
-
 function fadeButton(currentButton) {
+  // console.log(currebtbuttonId = document.getElementById(currentButton).getAttribute("id"));
   document.querySelector("#" + currentButton).classList.add("pressed");
   setTimeout(function() {
     document.querySelector("#" + currentButton).classList.remove("pressed");
   }, 100);
+
 }
 
 function gameOver() {
