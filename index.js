@@ -22,6 +22,7 @@ document.querySelector("#play").addEventListener("click", function() {
     }
   }
 });
+
 function patternGeneration() {
   document.querySelector("#score").innerHTML = "SCORE: "
   buttonPressed = [];
@@ -30,36 +31,19 @@ function patternGeneration() {
   var randomNumber = Math.floor(Math.random() * 16);
   var randomChosenButton = buttonOnScreen[randomNumber];
   buttonPattern.push(randomChosenButton);
-  // setTimeout(function(){
-  //   for(var i = 0 ; i<buttonPattern.length ; i++){
-  //     var currentButton = document.getElementById(buttonPattern[i]).getAttribute("id");
-  //     console.log(currentButton);
-  //     document.getElementById(currentButton).classList.add("pressed");
-  //     setTimeout(function(){
-  //       document.getElementById(currentButton).classList.remove("pressed");
-  //     },100);
-  //   }
-  // },200);
-  setInterval(function(){
-    for(var i = 0 ; i < buttonPattern.length ; i++){
-      var currentButton = document.getElementById(buttonPattern[i]).getAttribute("id");
-      // till now all the buttons will be caught.
-      // if( i!= buttonPattern.length-1)
-      fadeButton(currentButton);
-    }
-  },1000)
+  fadeButton(randomChosenButton);
 }
 function checkAnswer(currentRound) {
   checkAnswerCount = 0;
   var currentPattern = [];
-  for(var i=0 ; i<buttonPattern.length ; i++){
-    currentPattern[i]=buttonPattern[i];
+  for (var i = 0; i < buttonPattern.length; i++) {
+    currentPattern[i] = buttonPattern[i];
   }
   for (var i = 0; i < buttonPressed.length; i++) {
     if (currentPattern.includes(buttonPressed[i])) {
       checkAnswerCount++;
       var index = currentPattern.indexOf(buttonPressed[i]);
-      currentPattern.splice(index,1);
+      currentPattern.splice(index, 1);
       console.log("button found");
       if (checkAnswerCount === buttonPattern.length) {
         setTimeout(function() {
@@ -71,6 +55,7 @@ function checkAnswer(currentRound) {
     }
   }
 }
+
 function fadeButton(currentButton) {
   // console.log(currebtbuttonId = document.getElementById(currentButton).getAttribute("id"));
   document.querySelector("#" + currentButton).classList.add("pressed");
