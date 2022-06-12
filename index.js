@@ -31,7 +31,19 @@ function patternGeneration() {
   var randomNumber = Math.floor(Math.random() * 16);
   var randomChosenButton = buttonOnScreen[randomNumber];
   buttonPattern.push(randomChosenButton);
-  fadeButton(randomChosenButton);
+  animateArrayButtons(buttonPattern.length);
+}
+
+function animateArrayButtons(currentPatternLength){
+  for(var i = 0 ; i<currentPatternLength ; i++){
+    setTimeout(function(){
+      console.log(buttonPattern);
+      document.querySelector("#"+buttonPattern[i]).classList.add("pressed");
+      setTimeout(function(){
+        document.querySelector("#"+buttonPattern[i]).classList.remove("pressed");
+      },200)
+    },500*currentPatternLength);
+  }
 }
 function checkAnswer(currentRound) {
   checkAnswerCount = 0;
@@ -57,7 +69,6 @@ function checkAnswer(currentRound) {
 }
 
 function fadeButton(currentButton) {
-  // console.log(currebtbuttonId = document.getElementById(currentButton).getAttribute("id"));
   document.querySelector("#" + currentButton).classList.add("pressed");
   setTimeout(function() {
     document.querySelector("#" + currentButton).classList.remove("pressed");
